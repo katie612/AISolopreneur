@@ -1,0 +1,2 @@
+# AISolopreneur
+Tribu training
