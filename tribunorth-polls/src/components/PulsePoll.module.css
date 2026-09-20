@@ -1,0 +1,164 @@
+/* Tokens fall back to the live tribunorth.com.au palette. If the site already
+   exposes brand custom properties, set --pulse-* once on :root and every poll
+   picks them up. */
+.poll {
+  --pulse-surface: var(--tribu-surface, #ffffff);
+  --pulse-page: var(--tribu-bg, #faf9f7);
+  --pulse-ink: var(--tribu-ink, #2f2c28);
+  --pulse-muted: var(--tribu-muted, #6b665f);
+  --pulse-line: var(--tribu-line, #e7e3dd);
+  --pulse-accent: var(--tribu-accent, #b5654a);
+  --pulse-accent-soft: var(--tribu-accent-soft, #f0e2db);
+
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 1.75rem;
+  background: var(--pulse-surface);
+  border: 1px solid var(--pulse-line);
+  border-radius: 14px;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--pulse-ink);
+  /* Holds height across idle -> results so the page never jumps under the reader. */
+  min-height: var(--pulse-min-height, 15rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.question {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.context {
+  margin: 0.5rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--pulse-muted);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.option {
+  width: 100%;
+  padding: 0.8125rem 1rem;
+  text-align: left;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: var(--pulse-ink);
+  background: var(--pulse-page);
+  border: 1px solid var(--pulse-line);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease;
+}
+
+.option:hover:not(:disabled) {
+  border-color: var(--pulse-accent);
+  background: var(--pulse-accent-soft);
+}
+
+.option:active:not(:disabled) { transform: translateY(1px); }
+
+.option:focus-visible {
+  outline: 2px solid var(--pulse-accent);
+  outline-offset: 2px;
+}
+
+.option:disabled { cursor: default; opacity: 0.55; }
+
+/* ---- results ---- */
+
+.resultIntro {
+  margin: 1.25rem 0 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pulse-muted);
+}
+
+.bars { display: flex; flex-direction: column; gap: 0.75rem; margin: 0; }
+
+.bar { display: grid; gap: 0.375rem; }
+
+.barHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.barLabelMine { font-weight: 600; }
+
+.barPercent { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.barTrack {
+  height: 7px;
+  background: var(--pulse-page);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--pulse-accent-soft);
+  transform-origin: left center;
+  transition: width 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.barFillMine { background: var(--pulse-accent); }
+
+.footnote {
+  margin: 1.125rem 0 0;
+  padding-top: 0.875rem;
+  border-top: 1px solid var(--pulse-line);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--pulse-muted);
+}
+
+.holding {
+  margin: 1.5rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--pulse-muted);
+}
+
+.holdingLead {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  color: var(--pulse-ink);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .option, .barFill { transition: none; }
+}
+
+@media (max-width: 480px) {
+  .poll { padding: 1.375rem; border-radius: 12px; }
+  .question { font-size: 1rem; }
+}
